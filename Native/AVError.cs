@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FFMpegSharp.Native;
+﻿namespace FFMpegSharp.Native;
 
 public static class AVError
 {
@@ -83,15 +79,15 @@ public static class AVError
     /// <summary>
     /// Requested feature is flagged experimental. Set strict_std_compliance if you really want to use it.
     /// </summary>
-    public static readonly int AVERROR_EXPERIMENTAL = (-0x2bb2afa8);
+    public static readonly int AVERROR_EXPERIMENTAL = -0x2bb2afa8;
     /// <summary>
     /// Input changed between calls. Reconfiguration is required. (can be OR-ed with AVERROR_OUTPUT_CHANGED)
     /// </summary>
-    public static readonly int AVERROR_INPUT_CHANGED = (-0x636e6701);
+    public static readonly int AVERROR_INPUT_CHANGED = -0x636e6701;
     /// <summary>
     /// Output changed between calls. Reconfiguration is required. (can be OR-ed with AVERROR_INPUT_CHANGED)
     /// </summary>
-    public static readonly int AVERROR_OUTPUT_CHANGED = (-0x636e6702);
+    public static readonly int AVERROR_OUTPUT_CHANGED = -0x636e6702;
 
     /// <summary>
     /// HTTP & RTSP errors
@@ -117,7 +113,7 @@ public static class AVError
 
     private static int MKTAG(byte a, byte b, byte c, byte d)
     {
-        return (int)((uint)a | ((uint)b << 8) | ((uint)c << 16) | ((uint)d << 24));
+        return (int)(a | ((uint)b << 8) | ((uint)c << 16) | ((uint)d << 24));
     }
 
     public static int Error(int errno)
