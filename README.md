@@ -14,4 +14,4 @@
 
 **Languages and Frameworks**
 
-TerraFX uses C# as its primary development language and .NET Core as our primary target framework.
+FFMpeg.Net uses C# as its primary development language and .NET as our primary target framework.
