@@ -7,15 +7,20 @@ public abstract class AVNative<T> where T : AVNative<T>, new()
 {
     private static readonly Lock _sync = new();
 
-    protected void Load(string libraryPath)
+    protected void Load(string library)
     {
-        FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+        var rid = RuntimeInformation.RuntimeIdentifier;
+        var location = Assembly.GetEntryAssembly()!.Location;
+        var directory = Path.GetDirectoryName(location);
+        var libraryPath = Path.Combine(directory, rid, library);
         nint libPtr = NativeLibrary.Load(libraryPath);
+
+        FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
         foreach (FieldInfo field in fields)
         {
             nint methodPtr = NativeLibrary.GetExport(libPtr, field.Name);
 #if DEBUG
-            Console.WriteLine($"{Path.GetFileName(libraryPath)}::{field.Name} = @{methodPtr}");
+            Console.WriteLine($"{Path.GetFileName(library)}::{field.Name} = @{methodPtr}");
 #endif
             field.SetValue(this, methodPtr);
         }

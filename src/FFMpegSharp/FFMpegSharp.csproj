@@ -7,8 +7,40 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<RootNamespace>FFMpegSharp</RootNamespace>
 	</PropertyGroup>
-	<ItemGroup>
-	  <Folder Include="Native\Postproc\" />
+
+	<ItemGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+		<None Include=".\runtimes\win-x64\native\avcodec-60.dll" Condition="'$(Platform)'!='x86'">
+			<Link>win-x64\avcodec-60.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include=".\runtimes\win-x64\native\avdevice-60.dll" Condition="'$(Platform)'!='x86'">
+			<Link>win-x64\avdevice-60.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include=".\runtimes\win-x64\native\avfilter-9.dll" Condition="'$(Platform)'!='x86'">
+			<Link>win-x64\avfilter-9.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include=".\runtimes\win-x64\native\avformat-60.dll" Condition="'$(Platform)'!='x86'">
+			<Link>win-x64\avformat-60.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include=".\runtimes\win-x64\native\avutil-58.dll" Condition="'$(Platform)'!='x86'">
+			<Link>win-x64\avutil-58.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include=".\runtimes\win-x64\native\postproc-57.dll" Condition="'$(Platform)'!='x86'">
+			<Link>win-x64\postproc-57.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include=".\runtimes\win-x64\native\swresample-4.dll" Condition="'$(Platform)'!='x86'">
+			<Link>win-x64\swresample-4.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include=".\runtimes\win-x64\native\swscale-7.dll" Condition="'$(Platform)'!='x86'">
+			<Link>win-x64\swscale-7.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>

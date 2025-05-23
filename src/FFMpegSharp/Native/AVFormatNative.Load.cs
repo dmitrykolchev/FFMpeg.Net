@@ -2,7 +2,7 @@
 
 public partial class AVFormatNative : AVNative<AVFormatNative>
 {
-    private const string _LibraryPath = @"D:\LIBS\ffmpeg-6.1\bin\avformat-60.dll";
+    private const string _LibraryPath = @".\avformat-60.dll";
 
     public static AVFormatNative Initialize()
     {

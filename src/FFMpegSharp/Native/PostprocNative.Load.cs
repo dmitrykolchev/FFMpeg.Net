@@ -2,7 +2,7 @@
 
 public partial class PostprocNative : AVNative<PostprocNative>
 {
-    private const string _LibraryPath = @"D:\LIBS\ffmpeg-6.1\bin\postproc-57.dll";
+    private const string _LibraryPath = @".\postproc-57.dll";
 
     public static PostprocNative Initialize()
     {

@@ -2,7 +2,7 @@
 
 public partial class AVUtilNative : AVNative<AVUtilNative>
 {
-    private const string _LibraryPath = @"D:\LIBS\ffmpeg-6.1\bin\avutil-58.dll";
+    private const string _LibraryPath = @".\avutil-58.dll";
 
     public static AVUtilNative Initialize()
     {
