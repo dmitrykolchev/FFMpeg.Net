@@ -1,9 +1,14 @@
-﻿using System.Diagnostics;
+﻿// <copyright file="NativeTypeNameAttribute.cs" company="Dmitry Kolchev">
+// Copyright (c) 2025 Dmitry Kolchev. All rights reserved.
+// See LICENSE in the project root for license information
+// </copyright>
+
+using System.Diagnostics;
 
 namespace FFMpegSharp.Native;
 
 /// <summary>Defines the type of a member as it was used in the native signature.</summary>
-[    AttributeUsage(AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue, AllowMultiple = false, Inherited = true)]
+[AttributeUsage(AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue, AllowMultiple = false, Inherited = true)]
 [Conditional("DEBUG")]
 internal sealed partial class NativeTypeNameAttribute : Attribute
 {

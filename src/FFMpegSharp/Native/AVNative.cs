@@ -1,4 +1,9 @@
-﻿using System.Reflection;
+// <copyright file="AVNative.cs" company="Dmitry Kolchev">
+// Copyright (c) 2025 Dmitry Kolchev. All rights reserved.
+// See LICENSE in the project root for license information
+// </copyright>
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace FFMpegSharp.Native;
@@ -11,14 +16,14 @@ public abstract class AVNative<T> where T : AVNative<T>, new()
     {
         var rid = RuntimeInformation.RuntimeIdentifier;
         var location = Assembly.GetEntryAssembly()!.Location;
-        var directory = Path.GetDirectoryName(location);
+        var directory = Path.GetDirectoryName(location)!;
         var libraryPath = Path.Combine(directory, rid, library);
-        nint libPtr = NativeLibrary.Load(libraryPath);
+        var libPtr = NativeLibrary.Load(libraryPath);
 
-        FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
-        foreach (FieldInfo field in fields)
+        var fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+        foreach (var field in fields)
         {
-            nint methodPtr = NativeLibrary.GetExport(libPtr, field.Name);
+            var methodPtr = NativeLibrary.GetExport(libPtr, field.Name);
 #if DEBUG
             Console.WriteLine($"{Path.GetFileName(library)}::{field.Name} = @{methodPtr}");
 #endif
@@ -30,7 +35,7 @@ public abstract class AVNative<T> where T : AVNative<T>, new()
     {
         if (Instance is null)
         {
-            lock(_sync)
+            lock (_sync)
             {
                 if (Instance is null)
                 {

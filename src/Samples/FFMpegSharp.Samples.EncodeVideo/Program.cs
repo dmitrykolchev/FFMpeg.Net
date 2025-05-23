@@ -1,6 +1,10 @@
-﻿
-using FFMpegSharp.Native;
+﻿// <copyright file="Program.cs" company="Dmitry Kolchev">
+// Copyright (c) 2025 Dmitry Kolchev. All rights reserved.
+// See LICENSE in the project root for license information
+// </copyright>
+
 using System.Runtime.InteropServices;
+using FFMpegSharp.Native;
 
 namespace FFMpegSharp;
 
@@ -8,20 +12,14 @@ internal static class Program
 {
     private static readonly AVCodecNative avc = AVCodecNative.Initialize();
     private static readonly AVUtilNative avu = AVUtilNative.Initialize();
-    private static readonly AVFormatNative avformat = AVFormatNative.Initialize();
-    private static readonly AVDeviceNative avdevice = AVDeviceNative.Initialize();
-    private static readonly AVFilterNative avfilter = AVFilterNative.Initialize();
-    private static readonly PostprocNative postproc = PostprocNative.Initialize();
-    private static readonly SWResampleNative resample = SWResampleNative.Initialize();
-    private static readonly SWScaleNative scale = SWScaleNative.Initialize();
 
     private static unsafe void Main(string[] args)
     {
-        nint ptr = Marshal.StringToHGlobalAnsi(args.Length > 0 ? args[0] : "libx264");
+        var ptr = Marshal.StringToHGlobalAnsi(args.Length > 0 ? args[0] : "libx264");
 
-        AVCodec* codec = avc.avcodec_find_encoder_by_name((sbyte*)ptr.ToPointer());
-        AVCodecContext* c = avc.avcodec_alloc_context3(codec);
-        AVPacket* pkt = avc.av_packet_alloc();
+        var codec = avc.avcodec_find_encoder_by_name((sbyte*)ptr.ToPointer());
+        var c = avc.avcodec_alloc_context3(codec);
+        var pkt = avc.av_packet_alloc();
 
         /* put sample parameters */
         c->bit_rate = 400000;
@@ -43,17 +41,16 @@ internal static class Program
 
         if (codec->id == AVCodecID.AV_CODEC_ID_H264)
         {
-            nint presetPtr = Marshal.StringToHGlobalAnsi("preset");
-            nint slowPtr = Marshal.StringToHGlobalAnsi("slow");
-            int result = avu.av_opt_set(c->priv_data, (sbyte*)presetPtr, (sbyte*)slowPtr, 0);
-            //Console.WriteLine("av_opt_set(c->priv_data, \"preset\", \"slow\", 0);");
+            var presetPtr = Marshal.StringToHGlobalAnsi("preset");
+            var slowPtr = Marshal.StringToHGlobalAnsi("slow");
+            var result = avu.av_opt_set(c->priv_data, (sbyte*)presetPtr, (sbyte*)slowPtr, 0);
         }
 
-        int ret = avc.avcodec_open2(c, codec, null);
+        var ret = avc.avcodec_open2(c, codec, null);
 
-        string fileName = "test.264";
+        var fileName = "test.264";
 
-        AVFrame* frame = avu.av_frame_alloc();
+        var frame = avu.av_frame_alloc();
 
         frame->format = (int)c->pix_fmt;
         frame->width = c->width;
@@ -61,11 +58,11 @@ internal static class Program
 
         ret = avu.av_frame_get_buffer(frame, 0);
 
-        using (FileStream file = File.Create(fileName))
+        using (var file = File.Create(fileName))
         {
 
             /* encode 1 second of video */
-            for (int i = 0; i < 25; i++)
+            for (var i = 0; i < 25; i++)
             {
                 Console.Out.Flush();
 
@@ -91,18 +88,18 @@ internal static class Program
                    frame.
                  */
                 /* Y */
-                for (int y = 0; y < c->height; y++)
+                for (var y = 0; y < c->height; y++)
                 {
-                    for (int x = 0; x < c->width; x++)
+                    for (var x = 0; x < c->width; x++)
                     {
                         frame->data[0][(y * frame->linesize[0]) + x] = (byte)(x + y + (i * 3));
                     }
                 }
 
                 /* Cb and Cr */
-                for (int y = 0; y < c->height / 2; y++)
+                for (var y = 0; y < c->height / 2; y++)
                 {
-                    for (int x = 0; x < c->width / 2; x++)
+                    for (var x = 0; x < c->width / 2; x++)
                     {
                         frame->data[1][(y * frame->linesize[1]) + x] = (byte)(128 + y + (i * 2));
                         frame->data[2][(y * frame->linesize[2]) + x] = (byte)(64 + x + (i * 5));
