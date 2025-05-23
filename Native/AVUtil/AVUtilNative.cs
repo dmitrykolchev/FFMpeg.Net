@@ -578,5 +578,7 @@ namespace FFMpegSharp.Native
         public delegate* unmanaged[Cdecl]<AVPixelFormat, AVPixelFormat, int, int> av_get_pix_fmt_loss;
 
         public delegate* unmanaged[Cdecl]<AVPixelFormat, AVPixelFormat, AVPixelFormat, int, int*, AVPixelFormat> av_find_best_pix_fmt_of_2;
+
+        public delegate* unmanaged[Cdecl]<int, sbyte*, nuint, int> av_strerror;
     }
 }

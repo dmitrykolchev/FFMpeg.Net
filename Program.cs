@@ -1,8 +1,6 @@
 ﻿
 using FFMpegSharp.Native;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace FFMpegSharp;
 
@@ -10,6 +8,19 @@ internal static class Program
 {
     private static readonly AVCodecNative avc = AVCodecNative.Instance;
     private static readonly AVUtilNative avu = AVUtilNative.Instance;
+
+    private const int EAGAIN = 11;
+    private static readonly int AVERROR_EOF = MKTAG((byte)'E', (byte)'O', (byte)'F', (byte)' ');
+
+    private static int MKTAG(byte a, byte b, byte c, byte d)
+    {
+        return -(int)((uint)a | ((uint)b << 8) | ((uint)c << 16) | ((uint)d << 24));
+    }
+
+    private static int AVERROR(int error)
+    {
+        return -error;
+    }
 
 
     private static unsafe void Main(string[] args)
@@ -23,8 +34,8 @@ internal static class Program
         /* put sample parameters */
         c->bit_rate = 400000;
         /* resolution must be a multiple of two */
-        c->width = 352;
-        c->height = 288;
+        c->width = 1920;
+        c->height = 1080;
         /* frames per second */
         c->time_base = new AVRational { num = 1, den = 25 };
         c->framerate = new AVRational { num = 25, den = 1 };
@@ -42,15 +53,15 @@ internal static class Program
         {
             nint presetPtr = Marshal.StringToHGlobalAnsi("preset");
             nint slowPtr = Marshal.StringToHGlobalAnsi("slow");
-            var result = avu.av_opt_set(c->priv_data, (sbyte*)presetPtr, (sbyte*)slowPtr, 0);
+            int result = avu.av_opt_set(c->priv_data, (sbyte*)presetPtr, (sbyte*)slowPtr, 0);
             //Console.WriteLine("av_opt_set(c->priv_data, \"preset\", \"slow\", 0);");
         }
 
         int ret = avc.avcodec_open2(c, codec, null);
 
-        string fileName = "test.mp4";
+        string fileName = "test.264";
 
-        var frame = avu.av_frame_alloc();
+        AVFrame* frame = avu.av_frame_alloc();
 
         frame->format = (int)c->pix_fmt;
         frame->width = c->width;
@@ -58,7 +69,7 @@ internal static class Program
 
         ret = avu.av_frame_get_buffer(frame, 0);
 
-        using (var file = File.Create(fileName))
+        using (FileStream file = File.Create(fileName))
         {
 
             /* encode 1 second of video */
@@ -92,7 +103,7 @@ internal static class Program
                 {
                     for (int x = 0; x < c->width; x++)
                     {
-                        frame->data[0][y * frame->linesize[0] + x] = (byte)(x + y + i * 3);
+                        frame->data[0][(y * frame->linesize[0]) + x] = (byte)(x + y + (i * 3));
                     }
                 }
 
@@ -101,8 +112,8 @@ internal static class Program
                 {
                     for (int x = 0; x < c->width / 2; x++)
                     {
-                        frame->data[1][y * frame->linesize[1] + x] = (byte)(128 + y + i * 2);
-                        frame->data[2][y * frame->linesize[2] + x] = (byte)(64 + x + i * 5);
+                        frame->data[1][(y * frame->linesize[1]) + x] = (byte)(128 + y + (i * 2));
+                        frame->data[2][(y * frame->linesize[2]) + x] = (byte)(64 + x + (i * 5));
                     }
                 }
 
@@ -121,7 +132,7 @@ internal static class Program
                codecs. To create a valid file, you usually need to write packets
                into a proper file format or protocol; see mux.c.
              */
-            byte[] endcode = [ 0, 0, 1, 0xb7];
+            byte[] endcode = [0, 0, 1, 0xb7];
             if (codec->id == AVCodecID.AV_CODEC_ID_MPEG1VIDEO || codec->id == AVCodecID.AV_CODEC_ID_MPEG2VIDEO)
             {
                 file.Write(endcode, 0, endcode.Length);
@@ -131,21 +142,17 @@ internal static class Program
         avc.avcodec_free_context(&c);
         avu.av_frame_free(&frame);
         avc.av_packet_free(&pkt);
-
-        sbyte* name = avc.avcodec_get_name(codec->id);
-        string? codecname = Marshal.PtrToStringAnsi(new nint(name));
-        Console.WriteLine(codecname);
-
-        Marshal.FreeHGlobal(ptr);
     }
 
-    static unsafe void encode(AVCodecContext* enc_ctx, AVFrame* frame, AVPacket* pkt, Stream stream)
+    private static unsafe void encode(AVCodecContext* enc_ctx, AVFrame* frame, AVPacket* pkt, Stream stream)
     {
         int ret;
 
         /* send the frame to the encoder */
         if (frame is not null)
+        {
             Console.WriteLine($"Send frame \"{frame->pts}\"");
+        }
 
         ret = avc.avcodec_send_frame(enc_ctx, frame);
         if (ret < 0)

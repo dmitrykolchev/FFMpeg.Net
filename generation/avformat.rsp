@@ -7,6 +7,7 @@ generate-unmanaged-constants
 -m64
 --file 
 D:\LIBS\ffmpeg-6.1\include\libavformat\avformat.h
+D:\LIBS\ffmpeg-6.1\include\libavformat\avio.h
 --define-macro 
 __STDC_CONSTANT_MACROS
 -n 
@@ -22,6 +23,9 @@ D:\LIBS\ffmpeg-6.1\include\
 D:\LIBS\ffmpeg-6.1\include\libavcodec\ 
 --remap
 _iobuf*=void*
+--exclude
+avio_printf
+avio_tell
 --with-manual-import
 av_add_index_entry
 av_append_packet

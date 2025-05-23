@@ -2,6 +2,7 @@
 log-exclusions 
 log-visited-files
 multi-file
+generate-unmanaged-constants
 --additional
 -m64
 --file 
