@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36119.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFMpegSharp", "FFMpegSharp.csproj", "{90106A87-A96D-572B-0ADD-B7D1277CD401}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFMpegSharp.EncodeVideo", "..\FFMpegSharp.EncodeVideo\FFMpegSharp.EncodeVideo.csproj", "{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFMpegSharp", "src\FFMpegSharp\FFMpegSharp.csproj", "{681750C1-854F-7ACE-8043-F5CD4BDE2E51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{641BB74A-404A-46D6-B172-AC658F8E74E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFMpegSharp.Samples.EncodeVideo", "src\Samples\FFMpegSharp.Samples.EncodeVideo\FFMpegSharp.Samples.EncodeVideo.csproj", "{C516DF57-21C8-6138-9976-04EF3E106F91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,20 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90106A87-A96D-572B-0ADD-B7D1277CD401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90106A87-A96D-572B-0ADD-B7D1277CD401}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90106A87-A96D-572B-0ADD-B7D1277CD401}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90106A87-A96D-572B-0ADD-B7D1277CD401}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{681750C1-854F-7ACE-8043-F5CD4BDE2E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{681750C1-854F-7ACE-8043-F5CD4BDE2E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{681750C1-854F-7ACE-8043-F5CD4BDE2E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{681750C1-854F-7ACE-8043-F5CD4BDE2E51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C516DF57-21C8-6138-9976-04EF3E106F91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C516DF57-21C8-6138-9976-04EF3E106F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C516DF57-21C8-6138-9976-04EF3E106F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C516DF57-21C8-6138-9976-04EF3E106F91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {641BB74A-404A-46D6-B172-AC658F8E74E4}
+		{681750C1-854F-7ACE-8043-F5CD4BDE2E51} = {641BB74A-404A-46D6-B172-AC658F8E74E4}
+		{C516DF57-21C8-6138-9976-04EF3E106F91} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {66CB6FC9-10F7-4541-9697-967F2E06A8F4}
