@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36119.2 d17.14
+VisualStudioVersion = 17.14.36119.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFMpegSharp", "FFMpegSharp.csproj", "{90106A87-A96D-572B-0ADD-B7D1277CD401}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFMpegSharp.EncodeVideo", "..\FFMpegSharp.EncodeVideo\FFMpegSharp.EncodeVideo.csproj", "{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{90106A87-A96D-572B-0ADD-B7D1277CD401}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90106A87-A96D-572B-0ADD-B7D1277CD401}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90106A87-A96D-572B-0ADD-B7D1277CD401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5FDF803B-468B-49A6-A50C-AAD120BF6CDF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {66CB6FC9-10F7-4541-9697-967F2E06A8F4}
